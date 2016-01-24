@@ -13,6 +13,8 @@ namespace Shiritori
 {
     public partial class frmGame : Form
     {
+        string used_path = Application.StartupPath.Replace("\\bin\\Debug", "\\used.txt");
+        string dictionary_path = Application.StartupPath.Replace("\\bin\\Debug", "\\dictionary.txt");
         string used_words = Application.StartupPath + "\\used.txt";
         string dictionary = Application.StartupPath + "\\dictionary.txt";
         public frmGame()
@@ -65,11 +67,21 @@ namespace Shiritori
             }
         }
 
-            
-
      private void frmGame_FormClosed(object sender, FormClosedEventArgs e)
      {
-         File.Delete(used_words);
+         if (File.Exists(dictionary))
+         {
+            File.Delete(dictionary);
+            
+         }
+
+         if (File.Exists(used_words))
+         {
+            File.Delete(used_words);
+            
+         }
+         
+         
      }
 
      private void txtword_KeyPress(object sender, KeyPressEventArgs e)
@@ -84,9 +96,18 @@ namespace Shiritori
      {
          if (!File.Exists(used_words))
          {
-             File.CreateText(used_words);
+             File.Copy(used_path,used_words);
              
          }
+         if (!File.Exists(dictionary))
+         {
+             File.Copy(dictionary_path, dictionary);
+         }
+     }
+
+     private void button1_Click(object sender, EventArgs e)
+     {
+         this.Close();
      }
     }
 }

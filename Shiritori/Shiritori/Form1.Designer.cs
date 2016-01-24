@@ -31,6 +31,7 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.txtword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnOk
@@ -62,11 +63,23 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Enter word:";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(634, 340);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(91, 29);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Exit";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(912, 381);
+            this.ControlBox = false;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtword);
             this.Controls.Add(this.btnOk);
@@ -86,6 +99,7 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.TextBox txtword;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
     }
 }
 
