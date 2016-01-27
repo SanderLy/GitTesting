@@ -32,7 +32,7 @@
             this.txtword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.a_score = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnOk
@@ -74,14 +74,14 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label2
+            // a_score
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(23, 195);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(81, 19);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "000000000";
+            this.a_score.AutoSize = true;
+            this.a_score.Location = new System.Drawing.Point(23, 195);
+            this.a_score.Name = "a_score";
+            this.a_score.Size = new System.Drawing.Size(81, 19);
+            this.a_score.TabIndex = 4;
+            this.a_score.Text = "000000000";
             // 
             // frmGame
             // 
@@ -89,7 +89,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(912, 381);
             this.ControlBox = false;
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.a_score);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtword);
@@ -111,7 +111,7 @@
         private System.Windows.Forms.TextBox txtword;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label a_score;
     }
 }
 

@@ -25,13 +25,14 @@ namespace Shiritori
         }
 
      private void btnOk_Click(object sender, EventArgs e)
-        {
-            if (txtword.TextLength != 0) 
+        {         
+            if (txtword.TextLength != 0)
             {
-                bool word_played = File.ReadAllText(dictionary).Contains(txtword.Text.ToLower());
+                bool word_played = File.ReadAllLines(dictionary).Contains(txtword.Text.ToLower());
+
                 if (word_played == true)
                 {
-                    bool word_used = File.ReadAllText(used_words).Contains(txtword.Text.ToLower());
+                    bool word_used = File.ReadAllLines(used_words).Contains(txtword.Text.ToLower());
                     if (word_used == false)
                     {
                         TextWriter writer = new StreamWriter(used_words, true);
@@ -47,6 +48,7 @@ namespace Shiritori
                             writer.WriteLine(txtword.Text.ToLower());
                             writer.Close();
                             wordlenght_message(txtword.TextLength);
+                            scorer(txtword.Text);
                         }
                     }
                     // <--- check if word is already used -- >
@@ -56,11 +58,11 @@ namespace Shiritori
                     }
                 }
                 // <--- check word inside the dictionary -- >
-                else 
+                else
                 {
                     MessageBox.Show("Word does not exist in the dictionary.", "Message");
                 }
-             }
+            }
             // <--- check if the textbox is empty -- >
             else
             {
@@ -126,9 +128,49 @@ namespace Shiritori
             MessageBox.Show("Good", "Message");
         }
      }
-     private void scorer ()
+     private void scorer (string word)
     {
-         
+        char [] value = word.ToCharArray();
+         int wscore = 0; //current word score;
+         for(int i = 0;i<value.Length;i++)
+         {
+             switch(value[i])
+             {
+                 case 'a':
+                     wscore = wscore + 100;
+                     break;
+                 case 'e':
+                     wscore = wscore + 100;
+                     break;
+                 case 'i':
+                     wscore = wscore + 100;
+                     break;
+                 case 'o':
+                     wscore = wscore + 100;
+                     break;
+                 case 'u':
+                     wscore = wscore + 100;
+                     break;
+                 case 'l':
+                     wscore = wscore + 100;
+                     break;
+                 case 'n':
+                     wscore = wscore + 100;
+                     break;
+                 case 'r':
+                     wscore = wscore + 100;
+                     break;
+                 case 's':
+                     wscore = wscore + 100;
+                     break;
+                 case 't':
+                     wscore = wscore + 100;
+                     break;
+                //end of 100pts
+
+             }
+         }
+         a_score.Text = wscore.ToString();
     }
     }
 }
