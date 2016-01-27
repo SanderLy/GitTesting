@@ -28,24 +28,25 @@ namespace Shiritori
         {
             if (txtword.TextLength != 0) 
             {
-                bool word_played = File.ReadAllText(dictionary).Contains(txtword.Text);
+                bool word_played = File.ReadAllText(dictionary).Contains(txtword.Text.ToLower());
                 if (word_played == true)
                 {
-                    bool word_used = File.ReadAllText(used_words).Contains(txtword.Text);
+                    bool word_used = File.ReadAllText(used_words).Contains(txtword.Text.ToLower());
                     if (word_used == false)
                     {
                         TextWriter writer = new StreamWriter(used_words, true);
                         if (!File.Exists(used_words))
                         {
                             File.CreateText(used_words);
-                            writer.WriteLine(txtword.Text);
+                            writer.WriteLine(txtword.Text.ToLower());
                             writer.Close();
                         }
                         // <--- check if created: used words list -- >
                         if (File.Exists(used_words))
                         {
-                            writer.WriteLine(txtword.Text);
+                            writer.WriteLine(txtword.Text.ToLower());
                             writer.Close();
+                            wordlenght_message(txtword.TextLength);
                         }
                     }
                     // <--- check if word is already used -- >
@@ -109,5 +110,25 @@ namespace Shiritori
      {
          this.Close();
      }
+        
+    private void wordlenght_message(int wordlen)
+     {
+        if (wordlen > 8)
+        {
+            MessageBox.Show("Excellent", "Message");
+        }
+        else if (wordlen < 8 && wordlen > 5)
+        {
+            MessageBox.Show("Awesome", "Message");
+        }
+        else
+        {
+            MessageBox.Show("Good", "Message");
+        }
+     }
+     private void scorer ()
+    {
+         
+    }
     }
 }
