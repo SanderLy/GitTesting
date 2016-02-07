@@ -17,14 +17,19 @@ namespace Shiritori
         string dictionary_path = Application.StartupPath.Replace("\\bin\\Debug", "\\dictionary.txt");
         string used_words = Application.StartupPath + "\\used.txt";
         string dictionary = Application.StartupPath + "\\dictionary.txt";
-        int a_points;
+        bool p1, p2;
+        int p1_points = 0;
+        int p2_points = 0;
+        
+
         public frmGame()
         {
             InitializeComponent();          
         }
 
      private void btnOk_Click(object sender, EventArgs e)
-        {         
+        
+     {         
             if (txtword.TextLength != 0)
             {
                 bool word_played = File.ReadAllLines(dictionary).Contains(txtword.Text.ToLower());
@@ -34,6 +39,11 @@ namespace Shiritori
                     bool word_used = File.ReadAllLines(used_words).Contains(txtword.Text.ToLower());
                     if (word_used == false)
                     {
+                        string[] prevword = this.Controls.OfType<TextBox>().Select(t => t.Text).ToArray();
+                        lblpword.Text = txtword.Text;
+                        
+
+                        //storing the used words in a text file
                         TextWriter writer = new StreamWriter(used_words, true);
                         if (!File.Exists(used_words))
                         {
@@ -46,9 +56,13 @@ namespace Shiritori
                         {
                             writer.WriteLine(txtword.Text.ToLower());
                             writer.Close();
-                            wordlenght_message(txtword.TextLength);
-                            scorer(txtword.Text);
+                            
                         }
+                        scorer(txtword.Text.ToLower());
+                        wordlenght_message(txtword.TextLength);
+                        deadclock.Value = 100;
+                        lblroundNo.Text = Convert.ToString(Convert.ToInt32(lblroundNo.Text) + 1);
+                        txtword.Clear();
                     }
                     // <--- check if word is already used -- >
                     else
@@ -93,7 +107,8 @@ namespace Shiritori
 
      private void frmGame_Load(object sender, EventArgs e)
      {
-         a_points = 0;
+         //start player 1
+         p1 = true;
          if (!File.Exists(used_words))
          {
              File.Copy(used_path,used_words);
@@ -114,18 +129,16 @@ namespace Shiritori
      private void deadtimer_Tick(object sender, EventArgs e)
      {
 
-         if (deadclock.Value<100)
-         {
-             deadclock.Value += 1;
-         }
-         if(deadclock.Value==100)
-         { 
-             
-                 deadtimer.Enabled = false;
-                 MessageBox.Show("GAME OVER", "message");
-             
-            
-         }
+         //if (deadclock.Value>0)
+         //{
+         //    deadclock.Value -= 10;
+         //}
+         //if(deadclock.Value==0)
+         //{ 
+         //       MessageBox.Show("GAME OVER", "message");
+                
+         //}
+         // these codes are working and has been commented for debugging purposes.
      }
 
      private void wordlenght_message(int wordlen)
@@ -145,6 +158,7 @@ namespace Shiritori
      }
      private void scorer(string word)
      {
+         
          char[] value = word.ToCharArray();
          int wscore = 0; //current word score;
          for (int i = 0; i < value.Length; i++)
@@ -233,9 +247,38 @@ namespace Shiritori
                      break;
              }
          }
-         a_points += wscore;
-         a_score.Text = String.Format("{0:0000000000}",a_points); 
+         MessageBox.Show(wscore.ToString());
+         if (p1 ==  true)
+         {
+             p1_points += wscore;
+             p1_score.Text = String.Format("{0:000000000}", p1_points);
+             p1 = false;
+             p2 = true;
+         }
+         else
+         {
+             p2_points += wscore;
+             p2_score.Text = String.Format("{0:000000000}", p2_points);
+             p2 = false;
+             p1 = true;
+         }
      }
-
+        private void det_winner(){
+            if (lblroundNo.Text == "10")
+            {
+                if (p1_points > p2_points)
+                {
+                    MessageBox.Show ("Player 1 Wins!!!");
+                }
+                else if (p2_points > p1_points)
+                {
+                    MessageBox.Show("Player 2 Wins !!!");
+                }
+                else if (p1_points ==  p2_points)
+                {
+                    MessageBox.Show("It's a tie");
+                }
+            }
+        }
     }
 }

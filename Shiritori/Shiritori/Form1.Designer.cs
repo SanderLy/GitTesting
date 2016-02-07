@@ -32,9 +32,16 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.txtword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.a_score = new System.Windows.Forms.Label();
+            this.p1_score = new System.Windows.Forms.Label();
             this.deadclock = new System.Windows.Forms.ProgressBar();
             this.deadtimer = new System.Windows.Forms.Timer(this.components);
+            this.lblprev = new System.Windows.Forms.Label();
+            this.lblpword = new System.Windows.Forms.Label();
+            this.lblround = new System.Windows.Forms.Label();
+            this.lblroundNo = new System.Windows.Forms.Label();
+            this.lblp1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.p2_score = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnOk
@@ -66,14 +73,14 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Enter word:";
             // 
-            // a_score
+            // p1_score
             // 
-            this.a_score.AutoSize = true;
-            this.a_score.Location = new System.Drawing.Point(12, 70);
-            this.a_score.Name = "a_score";
-            this.a_score.Size = new System.Drawing.Size(81, 19);
-            this.a_score.TabIndex = 4;
-            this.a_score.Text = "000000000";
+            this.p1_score.AutoSize = true;
+            this.p1_score.Location = new System.Drawing.Point(11, 278);
+            this.p1_score.Name = "p1_score";
+            this.p1_score.Size = new System.Drawing.Size(81, 19);
+            this.p1_score.TabIndex = 4;
+            this.p1_score.Text = "000000000";
             // 
             // deadclock
             // 
@@ -82,19 +89,92 @@
             this.deadclock.Size = new System.Drawing.Size(480, 23);
             this.deadclock.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.deadclock.TabIndex = 5;
+            this.deadclock.Value = 100;
             // 
             // deadtimer
             // 
             this.deadtimer.Interval = 1000;
             this.deadtimer.Tick += new System.EventHandler(this.deadtimer_Tick);
             // 
+            // lblprev
+            // 
+            this.lblprev.AutoSize = true;
+            this.lblprev.Location = new System.Drawing.Point(364, 9);
+            this.lblprev.Name = "lblprev";
+            this.lblprev.Size = new System.Drawing.Size(114, 19);
+            this.lblprev.TabIndex = 6;
+            this.lblprev.Text = "Previous Word:";
+            // 
+            // lblpword
+            // 
+            this.lblpword.AutoSize = true;
+            this.lblpword.Location = new System.Drawing.Point(401, 28);
+            this.lblpword.Name = "lblpword";
+            this.lblpword.Size = new System.Drawing.Size(33, 19);
+            this.lblpword.TabIndex = 7;
+            this.lblpword.Text = "n/a";
+            this.lblpword.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblround
+            // 
+            this.lblround.AutoSize = true;
+            this.lblround.Location = new System.Drawing.Point(225, 9);
+            this.lblround.Name = "lblround";
+            this.lblround.Size = new System.Drawing.Size(54, 19);
+            this.lblround.TabIndex = 8;
+            this.lblround.Text = "Round";
+            // 
+            // lblroundNo
+            // 
+            this.lblroundNo.AutoSize = true;
+            this.lblroundNo.Location = new System.Drawing.Point(243, 28);
+            this.lblroundNo.Name = "lblroundNo";
+            this.lblroundNo.Size = new System.Drawing.Size(17, 19);
+            this.lblroundNo.TabIndex = 9;
+            this.lblroundNo.Text = "1";
+            this.lblroundNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblp1
+            // 
+            this.lblp1.AutoSize = true;
+            this.lblp1.Location = new System.Drawing.Point(12, 259);
+            this.lblp1.Name = "lblp1";
+            this.lblp1.Size = new System.Drawing.Size(68, 19);
+            this.lblp1.TabIndex = 10;
+            this.lblp1.Text = "Player 1:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(388, 259);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(68, 19);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Player 2:";
+            // 
+            // p2_score
+            // 
+            this.p2_score.AutoSize = true;
+            this.p2_score.Location = new System.Drawing.Point(388, 278);
+            this.p2_score.Name = "p2_score";
+            this.p2_score.Size = new System.Drawing.Size(81, 19);
+            this.p2_score.TabIndex = 4;
+            this.p2_score.Text = "000000000";
+            // 
             // frmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(504, 381);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblp1);
+            this.Controls.Add(this.lblroundNo);
+            this.Controls.Add(this.lblround);
+            this.Controls.Add(this.lblpword);
+            this.Controls.Add(this.lblprev);
             this.Controls.Add(this.deadclock);
-            this.Controls.Add(this.a_score);
+            this.Controls.Add(this.p2_score);
+            this.Controls.Add(this.p1_score);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtword);
             this.Controls.Add(this.btnOk);
@@ -114,9 +194,16 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.TextBox txtword;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label a_score;
+        private System.Windows.Forms.Label p1_score;
         private System.Windows.Forms.ProgressBar deadclock;
         private System.Windows.Forms.Timer deadtimer;
+        private System.Windows.Forms.Label lblprev;
+        private System.Windows.Forms.Label lblpword;
+        private System.Windows.Forms.Label lblround;
+        private System.Windows.Forms.Label lblroundNo;
+        private System.Windows.Forms.Label lblp1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label p2_score;
     }
 }
 
