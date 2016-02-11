@@ -13,6 +13,7 @@ namespace Shiritori
 {
     public partial class frmGame : Form
     {
+        string last_let = "";
         string used_path = Application.StartupPath.Replace("\\bin\\Debug", "\\used.txt");
         string dictionary_path = Application.StartupPath.Replace("\\bin\\Debug", "\\dictionary.txt");
         string used_words = Application.StartupPath + "\\used.txt";
@@ -21,61 +22,67 @@ namespace Shiritori
         int p1_points = 0;
         int p2_points = 0;
         
-
         public frmGame()
         {
             InitializeComponent();          
         }
 
      private void btnOk_Click(object sender, EventArgs e)
-        
-     {         
+        {
+            
             if (txtword.TextLength != 0)
             {
-                bool word_played = File.ReadAllLines(dictionary).Contains(txtword.Text.ToLower());
-
-                if (word_played == true)
+                if (txtword.Text.StartsWith(last_let) == true || last_let == "")
                 {
-                    bool word_used = File.ReadAllLines(used_words).Contains(txtword.Text.ToLower());
-                    if (word_used == false)
-                    {
-                        string[] prevword = this.Controls.OfType<TextBox>().Select(t => t.Text).ToArray();
-                        lblpword.Text = txtword.Text;
-                        
+                        bool word_played = File.ReadAllLines(dictionary).Contains(txtword.Text.ToLower());
 
-                        //storing the used words in a text file
-                        TextWriter writer = new StreamWriter(used_words, true);
-                        if (!File.Exists(used_words))
+                        if (word_played == true)
                         {
-                            File.CreateText(used_words);
-                            writer.WriteLine(txtword.Text.ToLower());
-                            writer.Close();
+                            bool word_used = File.ReadAllLines(used_words).Contains(txtword.Text.ToLower());
+                            if (word_used == false)
+                            {
+                                string[] prevword = this.Controls.OfType<TextBox>().Select(t => t.Text).ToArray();
+                                lblpword.Text = txtword.Text;
+
+                                //storing the used words in a text file
+                                TextWriter writer = new StreamWriter(used_words, true);
+                                if (!File.Exists(used_words))
+                                {
+                                    File.CreateText(used_words);
+                                    writer.WriteLine(txtword.Text.ToLower());
+                                    writer.Close();
+                                }
+                                // <--- check if created: used words list -- >
+                                if (File.Exists(used_words))
+                                {
+                                    writer.WriteLine(txtword.Text.ToLower());
+                                    writer.Close();
+
+                                }
+                                scorer(txtword.Text.ToLower());
+                                wordlenght_message(txtword.TextLength);
+                                deadclock.Value = 100;
+                                lblroundNo.Text = Convert.ToString(Convert.ToInt32(lblroundNo.Text) + 1);
+                                txtword.Clear();
+                            }
+                            // <--- check if word is already used -- >
+                            else
+                            {
+                                MessageBox.Show("Word is already used. Try something else.", "Message");
+                            }
                         }
-                        // <--- check if created: used words list -- >
-                        if (File.Exists(used_words))
+                        // <--- check word inside the dictionary -- >
+                        else
                         {
-                            writer.WriteLine(txtword.Text.ToLower());
-                            writer.Close();
-                            
+                            MessageBox.Show("Word does not exist in the dictionary.", "Message");
                         }
-                        scorer(txtword.Text.ToLower());
-                        wordlenght_message(txtword.TextLength);
-                        deadclock.Value = 100;
-                        lblroundNo.Text = Convert.ToString(Convert.ToInt32(lblroundNo.Text) + 1);
-                        txtword.Clear();
-                    }
-                    // <--- check if word is already used -- >
+                    }//  <--- check last letter of the previous word -- >
                     else
                     {
-                        MessageBox.Show("Word is already used. Try something else.", "Message");
-                    }
+                        MessageBox.Show("Letters does not match.", "Message");
+                    }    
                 }
-                // <--- check word inside the dictionary -- >
-                else
-                {
-                    MessageBox.Show("Word does not exist in the dictionary.", "Message");
-                }
-            }
+              
             // <--- check if the textbox is empty -- >
             else
             {
@@ -118,7 +125,7 @@ namespace Shiritori
          {
              File.Copy(dictionary_path, dictionary);
          }
-         deadtimer.Enabled = true;
+         //deadtimer.Enabled = true;
      }
 
      private void button1_Click(object sender, EventArgs e)
@@ -247,7 +254,8 @@ namespace Shiritori
                      break;
              }
          }
-         MessageBox.Show(wscore.ToString());
+         last_let = word.Substring(word.Length - 1);
+         MessageBox.Show(last_let);
          if (p1 ==  true)
          {
              p1_points += wscore;
@@ -262,6 +270,7 @@ namespace Shiritori
              p2 = false;
              p1 = true;
          }
+         det_winner();
      }
         private void det_winner(){
             if (lblroundNo.Text == "10")
@@ -269,16 +278,20 @@ namespace Shiritori
                 if (p1_points > p2_points)
                 {
                     MessageBox.Show ("Player 1 Wins!!!");
+                    this.Close();
                 }
                 else if (p2_points > p1_points)
                 {
                     MessageBox.Show("Player 2 Wins !!!");
+                    this.Close();
                 }
                 else if (p1_points ==  p2_points)
                 {
                     MessageBox.Show("It's a tie");
+                    this.Close();
                 }
             }
+            
         }
     }
 }
