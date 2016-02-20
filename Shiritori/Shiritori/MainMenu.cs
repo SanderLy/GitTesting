@@ -10,10 +10,12 @@ using System.Windows.Forms;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using Transitions;
 namespace Shiritori
 {
     public partial class MainMenu : Form
     {
+        
         Form game = new mGame();
         public MainMenu()
         {
@@ -25,61 +27,14 @@ namespace Shiritori
             
         }
 
-        private void RunThread()
-        {
-            Thread TcpServerRunThread = new Thread(new ThreadStart(TcpServerRun));
-            TcpServerRunThread.Start();
-        }
-         private void StopThread()
-        {
-            Thread TcpServerRunThread = new Thread(new ThreadStart(TcpServerRun));
-            TcpServerRunThread.Abort();
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-           //RunThread();
             game.Show();
         }
 
-        private void TcpServerRun()
+        private void splay_Click(object sender, EventArgs e)
         {
-            TcpListener tcpListner = new TcpListener(IPAddress.Any, 5004);
-            tcpListner.Start();
-            updateUI("Listening");
-            while(true)
-            {
-                TcpClient client = tcpListner.AcceptTcpClient();
-                Thread tcpHandlerThread = new Thread (new ParameterizedThreadStart(tcpHandler));
-                tcpHandlerThread.Start(client);
-            }
 
-        }
-
-        private void tcpHandler (object client)
-        {
-            TcpClient mClient = (TcpClient) client;
-            NetworkStream stream = mClient.GetStream();
-            byte[] message = new byte[1024];
-            stream.Read(message,0,message.Length);
-            updateUI("Message from client: " + Encoding.ASCII.GetString(message));
-            stream.Close();
-            mClient.Close();
-        }
-        private void updateUI(string s)
-        {
-            Func<int> del = delegate()
-            {
-               textBox1.AppendText(System.Environment.NewLine+s + System.Environment.NewLine);
-                return 0;
-            };
-            Invoke(del);
-        }
-
-        private void MainMenu_Leave(object sender, EventArgs e)
-        {
-            StopThread();
-  
         }
     }
 }

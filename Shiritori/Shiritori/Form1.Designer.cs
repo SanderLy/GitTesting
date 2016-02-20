@@ -42,15 +42,14 @@
             this.lblp1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.p2_score = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(197, 194);
+            this.btnOk.Location = new System.Drawing.Point(300, 183);
             this.btnOk.Margin = new System.Windows.Forms.Padding(4);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(99, 40);
+            this.btnOk.Size = new System.Drawing.Size(123, 60);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -61,14 +60,14 @@
             this.txtword.Location = new System.Drawing.Point(16, 148);
             this.txtword.Margin = new System.Windows.Forms.Padding(4);
             this.txtword.Name = "txtword";
-            this.txtword.Size = new System.Drawing.Size(475, 27);
+            this.txtword.Size = new System.Drawing.Size(755, 27);
             this.txtword.TabIndex = 1;
             this.txtword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtword_KeyPress);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(206, 125);
+            this.label1.Location = new System.Drawing.Point(323, 125);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(90, 19);
             this.label1.TabIndex = 2;
@@ -87,7 +86,7 @@
             // 
             this.deadclock.Location = new System.Drawing.Point(12, 346);
             this.deadclock.Name = "deadclock";
-            this.deadclock.Size = new System.Drawing.Size(480, 23);
+            this.deadclock.Size = new System.Drawing.Size(760, 23);
             this.deadclock.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.deadclock.TabIndex = 5;
             this.deadclock.Value = 100;
@@ -100,7 +99,7 @@
             // lblprev
             // 
             this.lblprev.AutoSize = true;
-            this.lblprev.Location = new System.Drawing.Point(364, 9);
+            this.lblprev.Location = new System.Drawing.Point(645, 9);
             this.lblprev.Name = "lblprev";
             this.lblprev.Size = new System.Drawing.Size(114, 19);
             this.lblprev.TabIndex = 6;
@@ -109,17 +108,18 @@
             // lblpword
             // 
             this.lblpword.AutoSize = true;
-            this.lblpword.Location = new System.Drawing.Point(401, 28);
+            this.lblpword.Location = new System.Drawing.Point(682, 28);
             this.lblpword.Name = "lblpword";
             this.lblpword.Size = new System.Drawing.Size(33, 19);
             this.lblpword.TabIndex = 7;
             this.lblpword.Text = "n/a";
             this.lblpword.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblpword.TextChanged += new System.EventHandler(this.lblpword_TextChanged);
             // 
             // lblround
             // 
             this.lblround.AutoSize = true;
-            this.lblround.Location = new System.Drawing.Point(225, 9);
+            this.lblround.Location = new System.Drawing.Point(331, 9);
             this.lblround.Name = "lblround";
             this.lblround.Size = new System.Drawing.Size(54, 19);
             this.lblround.TabIndex = 8;
@@ -128,7 +128,7 @@
             // lblroundNo
             // 
             this.lblroundNo.AutoSize = true;
-            this.lblroundNo.Location = new System.Drawing.Point(243, 28);
+            this.lblroundNo.Location = new System.Drawing.Point(349, 28);
             this.lblroundNo.Name = "lblroundNo";
             this.lblroundNo.Size = new System.Drawing.Size(17, 19);
             this.lblroundNo.TabIndex = 9;
@@ -147,7 +147,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(388, 259);
+            this.label3.Location = new System.Drawing.Point(691, 259);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(68, 19);
             this.label3.TabIndex = 11;
@@ -156,27 +156,17 @@
             // p2_score
             // 
             this.p2_score.AutoSize = true;
-            this.p2_score.Location = new System.Drawing.Point(388, 278);
+            this.p2_score.Location = new System.Drawing.Point(691, 278);
             this.p2_score.Name = "p2_score";
             this.p2_score.Size = new System.Drawing.Size(81, 19);
             this.p2_score.TabIndex = 4;
             this.p2_score.Text = "000000000";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(17, 54);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "send";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // mGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(504, 381);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblp1);
             this.Controls.Add(this.lblroundNo);
@@ -192,9 +182,11 @@
             this.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "mGame";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "The Beginning of The End";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmGame_FormClosed);
             this.Load += new System.EventHandler(this.frmGame_Load);
+            this.Leave += new System.EventHandler(this.mGame_Leave);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -215,7 +207,6 @@
         private System.Windows.Forms.Label lblp1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label p2_score;
-        private System.Windows.Forms.Button button1;
     }
 }
 
