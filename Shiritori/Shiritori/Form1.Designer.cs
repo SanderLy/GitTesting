@@ -1,6 +1,6 @@
 ﻿namespace Shiritori
 {
-    partial class frmGame
+    partial class mGame
     {
         /// <summary>
         /// Required designer variable.
@@ -42,6 +42,7 @@
             this.lblp1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.p2_score = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnOk
@@ -161,11 +162,21 @@
             this.p2_score.TabIndex = 4;
             this.p2_score.Text = "000000000";
             // 
-            // frmGame
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(17, 54);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "send";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // mGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(504, 381);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblp1);
             this.Controls.Add(this.lblroundNo);
@@ -180,7 +191,7 @@
             this.Controls.Add(this.btnOk);
             this.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "frmGame";
+            this.Name = "mGame";
             this.Text = "The Beginning of The End";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmGame_FormClosed);
             this.Load += new System.EventHandler(this.frmGame_Load);
@@ -191,19 +202,20 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.TextBox txtword;
+        public System.Windows.Forms.Button btnOk;
+        public System.Windows.Forms.TextBox txtword;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label p1_score;
         private System.Windows.Forms.ProgressBar deadclock;
         private System.Windows.Forms.Timer deadtimer;
         private System.Windows.Forms.Label lblprev;
-        private System.Windows.Forms.Label lblpword;
+        public System.Windows.Forms.Label lblpword;
         private System.Windows.Forms.Label lblround;
         private System.Windows.Forms.Label lblroundNo;
         private System.Windows.Forms.Label lblp1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label p2_score;
+        private System.Windows.Forms.Button button1;
     }
 }
 

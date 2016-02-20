@@ -71,11 +71,10 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Network.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="progressbar.cs">
-      <SubType>Component</SubType>
+    <Compile Include="NetMode.cs">
+      <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

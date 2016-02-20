@@ -5,31 +5,34 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 
 namespace Shiritori
 {
-    public partial class frmGame : Form
+    public partial class mGame : Form
     {
+       
         string last_let = "";
         string used_path = Application.StartupPath.Replace("\\bin\\Debug", "\\used.txt");
         string dictionary_path = Application.StartupPath.Replace("\\bin\\Debug", "\\dictionary.txt");
         string used_words = Application.StartupPath + "\\used.txt";
         string dictionary = Application.StartupPath + "\\dictionary.txt";
+        char[] prevword = new char[1024];
         bool p1, p2;
         int p1_points = 0;
         int p2_points = 0;
-        
-        public frmGame()
+        public mGame()
         {
-            InitializeComponent();          
-        }
-
-     private void btnOk_Click(object sender, EventArgs e)
-        {
+            InitializeComponent();
             
+        }
+     public void btnOk_Click(object sender, EventArgs e)
+        {
+           
             if (txtword.TextLength != 0)
             {
                 if (txtword.Text.StartsWith(last_let) == true || last_let == "")
@@ -41,7 +44,7 @@ namespace Shiritori
                             bool word_used = File.ReadAllLines(used_words).Contains(txtword.Text.ToLower());
                             if (word_used == false)
                             {
-                                string[] prevword = this.Controls.OfType<TextBox>().Select(t => t.Text).ToArray();
+                               
                                 lblpword.Text = txtword.Text;
 
                                 //storing the used words in a text file
@@ -59,12 +62,20 @@ namespace Shiritori
                                     writer.Close();
 
                                 }
-                                scorer(txtword.Text.ToLower());
+                                scorer(lblpword.Text.ToLower());
                                 wordlenght_message(txtword.TextLength);
                                 deadclock.Value = 100;
                                 lblroundNo.Text = Convert.ToString(Convert.ToInt32(lblroundNo.Text) + 1);
                                 txtword.Clear();
+
+                                //network codes....
+                                if (client.Connected) // if the client is connected
+                                {
+                                    
+                                    ServerSend(lblpword.Text); // uses the Function ClientSend and the msg as txtSend.Text
+                                }
                             }
+                                
                             // <--- check if word is already used -- >
                             else
                             {
@@ -90,7 +101,7 @@ namespace Shiritori
             }
         }
 
-     private void frmGame_FormClosed(object sender, FormClosedEventArgs e)
+     public void frmGame_FormClosed(object sender, FormClosedEventArgs e)
      {
          if (File.Exists(dictionary))
          {
@@ -104,7 +115,7 @@ namespace Shiritori
          } 
      }
 
-     private void txtword_KeyPress(object sender, KeyPressEventArgs e)
+     public void txtword_KeyPress(object sender, KeyPressEventArgs e)
      {
          if (e.KeyChar == (char)Keys.Return)
          {
@@ -112,30 +123,29 @@ namespace Shiritori
          }
      }
 
-     private void frmGame_Load(object sender, EventArgs e)
+     public void frmGame_Load(object sender, EventArgs e)
      {
          //start player 1
          p1 = true;
          if (!File.Exists(used_words))
          {
              File.Copy(used_path,used_words);
-             
          }
          if (!File.Exists(dictionary))
          {
              File.Copy(dictionary_path, dictionary);
          }
+         ServerListen();
          //deadtimer.Enabled = true;
      }
 
-     private void button1_Click(object sender, EventArgs e)
+     public void button1_Click(object sender, EventArgs e)
      {
          this.Close();
      }
   
-     private void deadtimer_Tick(object sender, EventArgs e)
+     public void deadtimer_Tick(object sender, EventArgs e)
      {
-
          //if (deadclock.Value>0)
          //{
          //    deadclock.Value -= 10;
@@ -148,7 +158,7 @@ namespace Shiritori
          // these codes are working and has been commented for debugging purposes.
      }
 
-     private void wordlenght_message(int wordlen)
+     public void wordlenght_message(int wordlen)
      {
          if (wordlen > 10)
          {
@@ -163,7 +173,7 @@ namespace Shiritori
              MessageBox.Show("Good", "Message");
          }
      }
-     private void scorer(string word)
+     public void scorer(string word)
      {
          
          char[] value = word.ToCharArray();
@@ -272,7 +282,8 @@ namespace Shiritori
          }
          det_winner();
      }
-        private void det_winner(){
+        public void det_winner()
+        {
             if (lblroundNo.Text == "10")
             {
                 if (p1_points > p2_points)
@@ -290,8 +301,89 @@ namespace Shiritori
                     MessageBox.Show("It's a tie");
                     this.Close();
                 }
-            }
-            
+            }           
         }
+    
+        //start of network codes...
+
+        int i;
+        TcpListener server = new TcpListener(IPAddress.Any, 1980); // Creates a TCP Listener To Listen to Any IPAddress trying to connect to the program with port 1980
+        NetworkStream stream; //Creats a NetworkStream (used for sending and receiving data)
+        TcpClient client; // Creates a TCP Client
+        byte[] datalength = new byte[4]; // creates a new byte with length 4 ( used for receivng data's lenght)
+
+        public void ServerReceive()
+        {
+            try
+            {
+                stream = client.GetStream(); //Gets The Stream of The Connection
+                new Thread(() => // Thread (like Timer)
+                {
+                    while ((i = stream.Read(datalength, 0, 4)) != 0)//Keeps Trying to Receive the Size of the Message or Data
+                    {
+                        // how to make a byte E.X byte[] examlpe = new byte[the size of the byte here] , i used BitConverter.ToInt32(datalength,0) cuz i received the length of the data in byte called datalength :D
+                        byte[] data = new byte[BitConverter.ToInt32(datalength, 0)]; // Creates a Byte for the data to be Received On
+                        stream.Read(data, 0, data.Length); //Receives The Real Data not the Size
+                        this.Invoke((MethodInvoker)delegate // To Write the Received data
+                        {
+                            lblpword.Text = Encoding.Default.GetString(data); // Encoding.Default.GetString(data); Converts Bytes Received to String
+                        });
+                    }
+                }).Start(); // Start the Thread
+                char[] prevword = new char[1024];
+                prevword = lblpword.Text.ToArray();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+
+        }
+
+        public void ServerListen()
+        {
+            try
+            {
+                server.Start(); // Starts Listening to Any IPAddress trying to connect to the program with port 1980
+                new Thread(() => // Creates a New Thread (like a timer)
+                {
+                    client = server.AcceptTcpClient(); //Waits for the Client To Connect
+                    if (client.Connected) // If you are connected
+                    {
+                        ServerReceive(); //Start Receiving
+                    }
+                }).Start();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+
+        }
+
+        public void ServerSend(string msg)
+        {
+            try
+            {
+                stream = client.GetStream(); //Gets The Stream of The Connection
+                byte[] data; // creates a new byte without mentioning the size of it cuz its a byte used for sending
+                data = Encoding.Default.GetBytes(msg); // put the msg in the byte ( it automaticly uses the size of the msg )
+                int length = data.Length; // Gets the length of the byte data
+                byte[] datalength = new byte[4]; // Creates a new byte with length of 4
+                datalength = BitConverter.GetBytes(length); //put the length in a byte to send it
+                stream.Write(datalength, 0, 4); // sends the data's length
+                stream.Write(data, 0, data.Length); //Sends the real data
+                char[] prevword = new char[1024];
+                prevword = lblpword.Text.ToArray();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+        }
+
+     
+        //end of network codes
+       
     }
 }
