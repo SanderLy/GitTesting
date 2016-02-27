@@ -12,9 +12,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Web;
 
-namespace Shiritori
+namespace Client
 {
-    public partial class ClientGame : Form
+    public partial class mGame : Form
     {
         string last_let = "";
         string used_path = Application.StartupPath.Replace("\\bin\\Debug", "\\used.txt");
@@ -196,25 +196,25 @@ namespace Shiritori
 
         }
 
-        //start of network codes
-
+       //start of network codes
+        
         public void ClientReceive()
         {
 
             stream = client.GetStream(); //Gets The Stream of The Connection
-            new Thread(() =>
+            new Thread(() => 
             {
                 while ((i = stream.Read(datalength, 0, 4)) != 0)//Keeps Trying to Receive the Size of the Message or Data
                 {
-
+                   
                     byte[] data = new byte[BitConverter.ToInt32(datalength, 0)]; // Creates a Byte for the data to be Received On
                     stream.Read(data, 0, data.Length); //Receives The Real Data not the Size
                     this.Invoke((MethodInvoker)delegate // To Write the Received data
                     {
-                        lblpword.Text = Encoding.Default.GetString(data); // Encoding.Default.GetString(data); Converts Bytes Received to String
+                        lblpword.Text =Encoding.Default.GetString(data); // Encoding.Default.GetString(data); Converts Bytes Received to String
                     });
                 }
-            }).Start();
+            }).Start(); 
         }
 
         public void ClientSend(string msg)
@@ -230,12 +230,13 @@ namespace Shiritori
         }
 
         //end of network codes
-        public ClientGame()
+
+        public mGame()
         {
             InitializeComponent();
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        public void btnSend_Click(object sender, EventArgs e)
         {
             if (txtword.TextLength != 0)
             {
@@ -284,7 +285,7 @@ namespace Shiritori
             }
         }
 
-        private void btnSaveIP_Click(object sender, EventArgs e)
+        public void btnSaveIP_Click(object sender, EventArgs e)
         {
             try
             {
@@ -306,7 +307,7 @@ namespace Shiritori
             }
         }
 
-        private void ClientGame_Load(object sender, EventArgs e)
+        public void mClient_Load(object sender, EventArgs e)
         {
             p1 = true;
             if (!File.Exists(used_words))
@@ -319,7 +320,7 @@ namespace Shiritori
             }
         }
 
-        private void ClientGame_FormClosed(object sender, FormClosedEventArgs e)
+        public void mClient_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (File.Exists(dictionary))
             {
@@ -332,7 +333,7 @@ namespace Shiritori
             } 
         }
 
-        private void lblpword_TextChanged(object sender, EventArgs e)
+        public void lblpword_TextChanged(object sender, EventArgs e)
         {
             GetLastLetter(lblpword.Text);
             scorer(lblpword.Text.ToLower());
@@ -354,5 +355,7 @@ namespace Shiritori
 
             }
         }
+
+    
     }
 }

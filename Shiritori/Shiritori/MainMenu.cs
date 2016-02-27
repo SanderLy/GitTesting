@@ -15,7 +15,7 @@ namespace Shiritori
     public partial class MainMenu : Form
     {
         bool single, two, Hscore, LMan;
-
+        Form HSClient = new ClientGame();
         Form HSHost = new HostForm_1();
         public MainMenu()
         {
@@ -96,7 +96,7 @@ namespace Shiritori
 
         private void btnClient_Click(object sender, EventArgs e)
         {
-
+            HSClient.Show();
         }
 
         private void btnHost_Click(object sender, EventArgs e)

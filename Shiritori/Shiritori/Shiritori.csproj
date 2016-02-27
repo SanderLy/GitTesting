@@ -62,8 +62,14 @@
     <Compile Include="ClientGame.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ClientGame.designer.cs">
+    <Compile Include="ClientGame.Designer.cs">
       <DependentUpon>ClientGame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ClientGame1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClientGame1.designer.cs">
+      <DependentUpon>ClientGame1.cs</DependentUpon>
     </Compile>
     <Compile Include="HostGame.cs">
       <SubType>Form</SubType>
@@ -81,6 +87,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ClientGame.resx">
       <DependentUpon>ClientGame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClientGame1.resx">
+      <DependentUpon>ClientGame1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="HostGame.resx">
       <DependentUpon>HostGame.cs</DependentUpon>
