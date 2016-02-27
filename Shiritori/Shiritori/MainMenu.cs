@@ -15,6 +15,8 @@ namespace Shiritori
     public partial class MainMenu : Form
     {
         bool single, two, Hscore, LMan;
+
+        Form HSHost = new HostForm_1();
         public MainMenu()
         {
             InitializeComponent();
@@ -100,6 +102,7 @@ namespace Shiritori
         private void btnHost_Click(object sender, EventArgs e)
         {
 
+            HSHost.Show();
         }
 
         private void btnBack_Click(object sender, EventArgs e)

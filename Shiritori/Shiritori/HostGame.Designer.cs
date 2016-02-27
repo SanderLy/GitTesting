@@ -1,6 +1,6 @@
 ﻿namespace Shiritori
 {
-    partial class mGame
+    partial class HostForm_1
     {
         /// <summary>
         /// Required designer variable.
@@ -162,7 +162,7 @@
             this.p2_score.TabIndex = 4;
             this.p2_score.Text = "000000000";
             // 
-            // mGame
+            // HostForm_1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -181,7 +181,7 @@
             this.Controls.Add(this.btnOk);
             this.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "mGame";
+            this.Name = "HostForm_1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "The Beginning of The End";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmGame_FormClosed);

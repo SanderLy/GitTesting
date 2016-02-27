@@ -14,7 +14,7 @@ using System.Web;
 
 namespace Shiritori
 {
-    public partial class mGame : Form
+    public partial class HostForm_1 : Form
     {
        
         string last_let = "";
@@ -268,7 +268,7 @@ namespace Shiritori
         }
         //end of network codes
 
-        public mGame()
+        public HostForm_1()
         {
             InitializeComponent();
             

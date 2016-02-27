@@ -59,11 +59,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="ClientGame.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ClientGame.designer.cs">
+      <DependentUpon>ClientGame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HostGame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HostGame.Designer.cs">
+      <DependentUpon>HostGame.cs</DependentUpon>
     </Compile>
     <Compile Include="MainMenu.cs">
       <SubType>Form</SubType>
@@ -73,8 +79,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="ClientGame.resx">
+      <DependentUpon>ClientGame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HostGame.resx">
+      <DependentUpon>HostGame.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
