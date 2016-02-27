@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using Transitions;
 namespace Shiritori
 {
     public partial class MainMenu : Form
@@ -22,19 +21,5 @@ namespace Shiritori
             InitializeComponent();
         }
 
-        private void MainMenu_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            game.Show();
-        }
-
-        private void splay_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
