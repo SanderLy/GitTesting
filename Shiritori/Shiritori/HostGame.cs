@@ -246,6 +246,19 @@ namespace Shiritori
             }
         }
 
+        public void ServerStop()
+        {
+            try
+            {
+                client.GetStream().Close();
+                client.Close();
+            }
+            catch
+            {
+                 client.Close();
+            }
+        }
+
         public void ServerSend(string msg)
         {
             try
@@ -273,7 +286,7 @@ namespace Shiritori
             InitializeComponent();
             
         }
-     public void btnOk_Click(object sender, EventArgs e)
+         public void btnOk_Click(object sender, EventArgs e)
         {
            
             if (txtword.TextLength != 0)
@@ -290,9 +303,9 @@ namespace Shiritori
                                
                                 lblpword.Text = txtword.Text.ToLower();                               
                                 wordlenght_message(txtword.TextLength);
-                                deadclock.Value = 100;
+
                                 //network codes....
-                                    ServerSend(lblpword.Text.ToLower());
+                                ServerSend(lblpword.Text.ToLower());
                                                                                                                        
                             }
                                 
@@ -321,89 +334,100 @@ namespace Shiritori
             }
         }
 
-     public void frmGame_FormClosed(object sender, FormClosedEventArgs e)
-     {
-         if (File.Exists(dictionary))
+         public void frmGame_FormClosed(object sender, FormClosedEventArgs e)
          {
-            File.Delete(dictionary);
+             if (File.Exists(dictionary))
+             {
+                File.Delete(dictionary);
+            
+             }
+             if (File.Exists(used_words))
+             {
+                File.Delete(used_words);
+            
+             }
+             ServerStop();
             
          }
-         if (File.Exists(used_words))
-         {
-            File.Delete(used_words);
-            
-         } 
-     }
 
-     public void txtword_KeyPress(object sender, KeyPressEventArgs e)
-     {
-         if (e.KeyChar == (char)Keys.Return)
+         public void txtword_KeyPress(object sender, KeyPressEventArgs e)
          {
-             btnOk.PerformClick();
+             if (e.KeyChar == (char)Keys.Return)
+             {
+                 btnOk.PerformClick();
+             }
          }
-     }
 
-     public void frmGame_Load(object sender, EventArgs e)
-     {
-         //start player 1
-         p1 = true;
-         if (!File.Exists(used_words))
+         public void frmGame_Load(object sender, EventArgs e)
          {
-             File.Copy(used_path,used_words);
+             //start player 1
+             p1 = true;
+             if (!File.Exists(used_words))
+             {
+                 File.Copy(used_path,used_words);
+             }
+             if (!File.Exists(dictionary))
+             {
+                 File.Copy(dictionary_path, dictionary);
+             }
+             ServerListen();
+             deadtimer.Enabled = true;
          }
-         if (!File.Exists(dictionary))
-         {
-             File.Copy(dictionary_path, dictionary);
-         }
-         ServerListen();
-         //deadtimer.Enabled = true;
-     }
 
-     public void button1_Click(object sender, EventArgs e)
-     {
-         this.Close();
-     }
+         public void button1_Click(object sender, EventArgs e)
+         {
+             this.Close();
+         }
   
-     public void deadtimer_Tick(object sender, EventArgs e)
-     {
-         //if (deadclock.Value>0)
-         //{
-         //    deadclock.Value -= 10;
-         //}
-         //if(deadclock.Value==0)
-         //{ 
-         //       MessageBox.Show("GAME OVER", "message");
-                
-         //}
-         // these codes are working and has been commented for debugging purposes.
-     }
-
-     private void lblpword_TextChanged(object sender, EventArgs e)
-     {
-         GetLastLetter(lblpword.Text);
-         scorer(lblpword.Text.ToLower());
-         lblroundNo.Text = Convert.ToString(Convert.ToInt32(lblroundNo.Text) + 1);
-         ChangePlayer();
-         //storing the used words in a text file
-         TextWriter writer = new StreamWriter(used_words, true);
-         if (!File.Exists(used_words))
+         public void deadtimer_Tick(object sender, EventArgs e)
          {
-             File.CreateText(used_words);
-             writer.WriteLine(lblpword.Text.ToLower());
-             writer.Close();
-         }
-         // <--- check if created: used words list -- >
-         if (File.Exists(used_words))
-         {
-             writer.WriteLine(lblpword.Text.ToLower());
-             writer.Close();
+             lblTime.Text = Convert.ToString(Convert.ToInt32(lblTime.Text) - 1);
+             if (lblTime.Text == "0")
+             {
+                 deadtimer.Enabled = false;
+                 p1_points -= 500;
+                 p1_score.Text = String.Format("{0:000000000}", p1_points);
+             }
 
          }
-     }
 
-        private void mGame_Leave(object sender, EventArgs e)
-     {
+         private void lblpword_TextChanged(object sender, EventArgs e)
+         {
+             GetLastLetter(lblpword.Text);
+             scorer(lblpword.Text.ToLower());
+             lblroundNo.Text = Convert.ToString(Convert.ToInt32(lblroundNo.Text) + 1);
+          
+             //storing the used words in a text file
+             TextWriter writer = new StreamWriter(used_words, true);
+             if (!File.Exists(used_words))
+             {
+                 File.CreateText(used_words);
+                 writer.WriteLine(lblpword.Text.ToLower());
+                 writer.Close();
+             }
+             // <--- check if created: used words list -- >
+             if (File.Exists(used_words))
+             {
+                 writer.WriteLine(lblpword.Text.ToLower());
+                 writer.Close();
 
-     }      
+             }
+         }
+        private void p2_score_TextChanged(object sender, EventArgs e)
+        {
+            btnOk.Enabled = true;
+            txtword.Text = "";
+            txtword.Enabled = true;
+            lblTime.Text = "10";
+        }
+
+        private void p1_score_TextChanged(object sender, EventArgs e)
+        {
+            lblTime.Text = "10";
+            deadtimer.Enabled = false;
+            btnOk.Enabled = false;
+            txtword.Enabled = false;
+            ChangePlayer();
+        }      
     }
 }

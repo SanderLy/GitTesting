@@ -101,10 +101,10 @@ namespace Shiritori
 
         private void btnHost_Click(object sender, EventArgs e)
         {
-
+            HSHost = new HostForm_1();
             HSHost.Show();
         }
-
+        
         private void btnBack_Click(object sender, EventArgs e)
         {
             if(pnlMenu.Visible == false && pnlPlayers.Visible ==true)
